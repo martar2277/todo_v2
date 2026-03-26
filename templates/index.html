@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<form action="/todos" method="post">
+    <input type="text" name="title" placeholder="New Todo">
+    <button type="submit">Add</button>
+</form>
+<ul>
+    {% for todo in todos %}
+    <li class="{% if todo.completed %}completed{% endif %}">
+        {{ todo.title }}
+        <!-- Form to mark todo as complete -->
+        {% if not todo.completed %}
+        <form action="/todos/{{ todo.id }}/complete" method="post" style="display:inline;">
+            <button type="submit">Complete</button>
+        </form>
+        {% endif %}
+        <!-- Form to delete todo -->
+        <form action="/todos/{{ todo.id }}/delete" method="post" style="display:inline;">
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
